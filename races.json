@@ -1,12 +1,93 @@
 [
-  {
-    "id": "1",
-    "race": "Teste 1",
-    "date": "2026-03-24T15:00:00Z"
-  },
-  {
-    "id": "2",
-    "race": "Teste 2",
-    "date": "2026-05-24T10:30:00Z"
-  }
+    {
+        "id": "st-petersburg",
+        "name": "Firestone Grand Prix of St. Petersburg",
+        "date": "2026-03-01"
+    },
+    {
+        "id": "phoenix",
+        "name": "Good Ranchers 250",
+        "date": "2026-03-07"
+    },
+    {
+        "id": "arlington",
+        "name": "Java House Grand Prix of Arlington",
+        "date": "2026-03-15"
+    },
+    {
+        "id": "barber",
+        "name": "Children's of Alabama Indy Grand Prix",
+        "date": "2026-03-27"
+    },
+    {
+        "id": "long-beach",
+        "name": "Acura Grand Prix of Long Beach",
+        "date": "2026-04-19",
+        "time": "18:30"
+    },
+    {
+        "id": "indianapolis-road-course",
+        "name": "Sonsio Grand Prix",
+        "date": "2026-05-09"
+    },
+    {
+        "id": "indianapolis-500",
+        "name": "110th Running of the Indianapolis 500",
+        "date": "2026-05-24"
+    },
+    {
+        "id": "detroit",
+        "name": "Chevrolet Detroit Grand Prix",
+        "date": "2026-05-31"
+    },
+    {
+        "id": "wwtr",
+        "name": "Bommarito Automotive Group 500",
+        "date": "2026-06-07"
+    },
+    {
+        "id": "road-america",
+        "name": "XPEL Grand Prix at Road America",
+        "date": "2026-06-21"
+    },
+    {
+        "id": "mid-ohio",
+        "name": "Honda Indy 200 at Mid-Ohio",
+        "date": "2026-07-05"
+    },
+    {
+        "id": "nashville",
+        "name": "Borchetta Bourbon Music City Grand Prix",
+        "date": "2026-07-19"
+    },
+    {
+        "id": "portland",
+        "name": "BITNILE.com Grand Prix of Portland",
+        "date": "2026-08-09"
+    },
+    {
+        "id": "markham",
+        "name": "Ontario Honda Dealers Indy at Markham",
+        "date": "2026-08-16"
+    },
+    {
+        "id": "washington-dc",
+        "name": "Freedom 250 Grand Prix of Washington, D.C.",
+        "date": "2026-08-23"
+    },
+    {
+        "id": "milwaukee-race-1",
+        "name": "Snap-on Makers and Fixers 250",
+        "date": "2026-08-29"
+    },
+    {
+        "id": "milwaukee-race-2",
+        "name": "Snap-on Milwaukee Mile 250",
+        "date": "2026-08-30"
+    },
+    {
+        "id": "laguna-seca",
+        "name": "WeatherTech Raceway Laguna Seca",
+        "date": "2026-09-06"
+    }
 ]
