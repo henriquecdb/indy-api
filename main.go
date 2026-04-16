@@ -1,11 +1,15 @@
 package main
 
 import (
+	"embed"
 	"encoding/json"
 	"log"
 	"net/http"
 	"os"
 )
+
+//go:embed races.json
+var embeddedFiles embed.FS
 
 type Race struct {
 	ID   string  `json:"id"`
@@ -17,7 +21,7 @@ type Race struct {
 var races []Race
 
 func loadData() {
-	data, err := os.ReadFile("races.json")
+	data, err := embeddedFiles.ReadFile("races.json")
 	if err != nil {
 		log.Fatalf("error reading races.json: %v", err)
 	}
@@ -42,8 +46,18 @@ func listRaces(w http.ResponseWriter, r *http.Request) {
 func main() {
 	loadData()
 
-	http.HandleFunc("/races", listRaces)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		_, _ = w.Write([]byte("Indy API is running"))
+	})
+	mux.HandleFunc("/races", listRaces)
 
-	log.Println("Server running on port 8081...")
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8081"
+	}
+
+	log.Printf("Server running on port %s...", port)
+	log.Fatal(http.ListenAndServe(":"+port, mux))
 }
