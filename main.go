@@ -5,44 +5,45 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 )
 
 type Race struct {
-	ID   string    `json:"id"`
-	Race string    `json:"race"`
-	Date time.Time `json:"date"`
+	ID   string  `json:"id"`
+	Name string  `json:"name"`
+	Date string  `json:"date"`
+	Time *string `json:"time,omitempty"`
 }
 
 var races []Race
 
 func loadData() {
-	arquivo, err := os.ReadFile("races.json")
+	data, err := os.ReadFile("races.json")
 	if err != nil {
-		log.Fatalf("Error while reading: %v", err)
+		log.Fatalf("error reading races.json: %v", err)
 	}
 
-	err = json.Unmarshal(arquivo, &races)
-	if err != nil {
-		log.Fatalf("Error while decoding json: %v", err)
+	if err := json.Unmarshal(data, &races); err != nil {
+		log.Fatalf("error decoding races.json: %v", err)
 	}
 }
 
-func getRaces(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(races)
+func listRaces(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(races); err != nil {
+		log.Printf("error encoding response: %v", err)
+	}
 }
 
 func main() {
 	loadData()
 
-	http.HandleFunc("/races", getRaces)
+	http.HandleFunc("/races", listRaces)
 
-	println("Server running on port 8081...")
+	log.Println("Server running on port 8081...")
 	log.Fatal(http.ListenAndServe(":8081", nil))
 }
