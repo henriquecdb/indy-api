@@ -1,0 +1,57 @@
+[
+  {
+    "id": "daytona-24",
+    "name": "Rolex 24 At Daytona",
+    "date": "2026-01-25"
+  },
+  {
+    "id": "sebring-12h",
+    "name": "Mobil 1 Twelve Hours of Sebring",
+    "date": "2026-03-21"
+  },
+  {
+    "id": "long-beach",
+    "name": "Acura Grand Prix of Long Beach",
+    "date": "2026-04-18"
+  },
+  {
+    "id": "laguna-seca",
+    "name": "Monterey SportsCar Championship",
+    "date": "2026-05-03"
+  },
+  {
+    "id": "detroit",
+    "name": "Chevrolet Detroit Grand Prix Presented By Lear",
+    "date": "2026-05-30"
+  },
+  {
+    "id": "watkins-glen",
+    "name": "Sahlen's Six Hours of The Glen",
+    "date": "2026-06-28"
+  },
+  {
+    "id": "ctmp",
+    "name": "Chevrolet Grand Prix",
+    "date": "2026-07-12"
+  },
+  {
+    "id": "road-america",
+    "name": "Motul SportsCar Endurance Grand Prix",
+    "date": "2026-08-02"
+  },
+  {
+    "id": "vir",
+    "name": "Michelin GT Challenge at VIR",
+    "date": "2026-08-23"
+  },
+  {
+    "id": "indianapolis",
+    "name": "TireRack.com Battle On The Bricks",
+    "date": "2026-09-20"
+  },
+  {
+    "id": "road-atlanta",
+    "name": "Motul Petit Le Mans",
+    "date": "2026-10-03"
+  }
+]

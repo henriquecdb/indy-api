@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-//go:embed races.json
+//go:embed indy.json imsa.json
 var embeddedFiles embed.FS
 
 type Race struct {
@@ -18,20 +18,23 @@ type Race struct {
 	Time *string `json:"time,omitempty"`
 }
 
-var races []Race
-
-func loadData() {
-	data, err := embeddedFiles.ReadFile("races.json")
+func loadData(filename string) []Race {
+	data, err := embeddedFiles.ReadFile(filename)
 	if err != nil {
-		log.Fatalf("error reading races.json: %v", err)
+		log.Fatalf("error reading %s: %v", filename, err)
 	}
 
-	if err := json.Unmarshal(data, &races); err != nil {
-		log.Fatalf("error decoding races.json: %v", err)
+	var result []Race
+	if err := json.Unmarshal(data, &result); err != nil {
+		log.Fatalf("error decoding %s: %v", filename, err)
 	}
+
+	return result
 }
 
-func listRaces(w http.ResponseWriter, r *http.Request) {
+func listRaces(w http.ResponseWriter, r *http.Request, category string) {
+	races := loadData(category)
+
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -43,15 +46,23 @@ func listRaces(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func main() {
-	loadData()
+func handleEndpoints(mux *http.ServeMux) {
+	mux.HandleFunc("/indy", func(w http.ResponseWriter, r *http.Request) {
+		listRaces(w, r, "indy.json")
+	})
+	mux.HandleFunc("/imsa", func(w http.ResponseWriter, r *http.Request) {
+		listRaces(w, r, "imsa.json")
+	})
+}
 
+func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 		_, _ = w.Write([]byte("Indy API is running"))
 	})
-	mux.HandleFunc("/races", listRaces)
+
+	handleEndpoints(mux)
 
 	port := os.Getenv("PORT")
 	if port == "" {
