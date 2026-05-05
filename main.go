@@ -117,7 +117,9 @@ func listRaces(w http.ResponseWriter, r *http.Request, category string) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Cache-Control", "s-maxage=300, stale-while-revalidate")
+	w.Header().Set("Cache-Control", "no-store, max-age=0")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
 	if err := json.NewEncoder(w).Encode(races); err != nil {
 		log.Printf("error encoding response: %v", err)
 	}
@@ -134,6 +136,7 @@ func handleEndpoints(mux *http.ServeMux) {
 
 func main() {
 	loadDotEnv()
+	log.SetOutput(os.Stdout)
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, _ *http.Request) {
