@@ -20,6 +20,44 @@ type Race struct {
 	Time *string `json:"time,omitempty"`
 }
 
+func normalizeTime(raw *string) *string {
+	if raw == nil {
+		return nil
+	}
+
+	value := strings.TrimSpace(*raw)
+	if value == "" {
+		return nil
+	}
+
+	parts := strings.Split(value, ":")
+	if len(parts) >= 2 {
+		hh := strings.TrimSpace(parts[0])
+		mm := strings.TrimSpace(parts[1])
+		if len(hh) == 1 {
+			hh = "0" + hh
+		}
+		if len(mm) >= 2 {
+			mm = mm[:2]
+		}
+		formatted := hh + ":" + mm
+		if _, err := time.Parse("15:04", formatted); err == nil {
+			return &formatted
+		}
+	}
+
+	if parsed, err := time.Parse("15:04:05.999999", value); err == nil {
+		formatted := parsed.Format("15:04")
+		return &formatted
+	}
+	if parsed, err := time.Parse("15:04:05", value); err == nil {
+		formatted := parsed.Format("15:04")
+		return &formatted
+	}
+
+	return raw
+}
+
 func loadDotEnv() {
 	data, err := os.ReadFile(".env")
 	if err != nil {
@@ -80,7 +118,7 @@ func getRacesFromDB(ctx context.Context, pool *pgxpool.Pool, category string) ([
 			continue
 		}
 		r.Date = dt.Format("2006-01-02")
-		r.Time = t
+		r.Time = normalizeTime(t)
 		races = append(races, r)
 	}
 
