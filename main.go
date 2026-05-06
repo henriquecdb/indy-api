@@ -112,13 +112,13 @@ func getRacesFromDB(ctx context.Context, pool *pgxpool.Pool, category string) ([
 	var races []Race
 	for rows.Next() {
 		var r Race
+		var dateStr string
 		var t *string
-		var dt time.Time
-		if err := rows.Scan(&r.ID, &r.Name, &dt, &t); err != nil {
+		if err := rows.Scan(&r.ID, &r.Name, &dateStr, &t); err != nil {
 			log.Printf("scan error: %v", err)
 			continue
 		}
-		r.Date = dt.Format("2006-01-02")
+		r.Date = dateStr
 		r.Time = normalizeTime(t)
 		races = append(races, r)
 	}
