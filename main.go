@@ -21,6 +21,18 @@ type Race struct {
 	Time *string `json:"time,omitempty"`
 }
 
+func (r Race) MarshalJSON() ([]byte, error) {
+	type Alias Race
+	aux := struct {
+		Date string `json:"date"`
+		*Alias
+	}{
+		Date:  r.Date + "T00:00:00Z",
+		Alias: (*Alias)(&r),
+	}
+	return json.Marshal(aux)
+}
+
 func normalizeTime(raw *string) *string {
 	if raw == nil {
 		return nil
