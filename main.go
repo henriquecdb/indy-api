@@ -191,6 +191,9 @@ func handleEndpoints(mux *http.ServeMux) {
 	mux.HandleFunc("/imsa", func(w http.ResponseWriter, r *http.Request) {
 		listRaces(w, r, "imsa")
 	})
+	mux.HandleFunc("/wec", func(w http.ResponseWriter, r *http.Request) {
+		listRaces(w, r, "wec")
+	})
 }
 
 func main() {
